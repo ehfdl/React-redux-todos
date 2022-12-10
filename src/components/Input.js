@@ -17,7 +17,6 @@ const Input = () => {
     const { name, value } = event.target;
     setTodo({ ...todo, [name]: value });
   };
-  console.log(todo.text);
 
   const onClickCreateTodo = () => {
     dispatch(createTodo({ ...todo, id }));

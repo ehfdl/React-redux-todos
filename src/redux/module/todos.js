@@ -1,6 +1,6 @@
 // action value 추가
 const CREATE_TODO = "CREATE_TODO";
-const LIST_TODO = "LIST_TODO";
+const DELETE_TODO = "DELETE_TODO";
 
 // action creator 생성
 
@@ -11,9 +11,9 @@ export const createTodo = (payload) => {
   };
 };
 
-export const listTodo = (payload) => {
+export const deleteTodo = (payload) => {
   return {
-    type: LIST_TODO,
+    type: DELETE_TODO,
     payload,
   };
 };
@@ -37,6 +37,12 @@ const todos = (state = initialState, action) => {
       return {
         ...state,
         todos: [...state.todos, action.payload],
+      };
+    }
+    case DELETE_TODO: {
+      return {
+        ...state,
+        todos: [...state.todos].filter((todo) => todo.id !== action.payload),
       };
     }
     default:
