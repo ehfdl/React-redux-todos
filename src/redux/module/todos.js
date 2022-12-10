@@ -2,6 +2,7 @@
 const CREATE_TODO = "CREATE_TODO";
 const DELETE_TODO = "DELETE_TODO";
 const UPDATE_TODO = "UPDATE_TODO";
+const READ_TODO = "READ_TODO";
 
 // action creator 생성
 
@@ -26,15 +27,29 @@ export const updateTodo = (payload) => {
   };
 };
 
+export const readTodo = (payload) => {
+  return {
+    type: READ_TODO,
+    payload,
+  };
+};
+
 // 초기 상태값
 const initialState = {
-  todos: [],
-  todo: {
-    id: "0",
-    title: "",
-    text: "",
-    isDone: false,
-  },
+  todos: [
+    {
+      id: "0",
+      title: "리액트",
+      text: "못했지롱",
+      isDone: false,
+    },
+    {
+      id: "1",
+      title: "리액트",
+      text: "다했지롱",
+      isDone: true,
+    },
+  ],
 };
 
 // 리듀서
@@ -70,6 +85,19 @@ const todos = (state = initialState, action) => {
         }),
       };
     }
+    case READ_TODO: {
+      return {
+        ...state,
+        todos: [...state.todos].map((todo) => {
+          if (todo.id === action.payload) {
+            return {
+              ...todo,
+            };
+          }
+        }),
+      };
+    }
+
     default:
       return state;
   }

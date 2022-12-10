@@ -51,6 +51,8 @@ const Input = () => {
   );
 };
 
+export default Input;
+
 // styled-component
 
 const InputContainer = styled.div`
@@ -104,5 +106,3 @@ const Button = styled.button`
     scale: 1.03;
   }
 `;
-
-export default Input;

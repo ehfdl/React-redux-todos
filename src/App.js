@@ -1,16 +1,7 @@
-import Header from "./components/Header";
-import Input from "./components/Input";
-import Listbox from "./components/Listbox";
-import "./App.css";
+import Router from "./Router";
 
 function App() {
-  return (
-    <div>
-      <Header />
-      <Input />
-      <Listbox />
-    </div>
-  );
+  return <Router />;
 }
 
 export default App;
