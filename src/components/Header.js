@@ -1,5 +1,13 @@
 import styled from "styled-components";
 
+function Header() {
+  return <Headerbox>나의 Todolist</Headerbox>;
+}
+
+export default Header;
+
+// styled-components
+
 const Headerbox = styled.header`
   position: relative;
   max-width: 1200px;
@@ -13,9 +21,3 @@ const Headerbox = styled.header`
   font-size: 40px;
   border-bottom: 1px solid black;
 `;
-
-function Header() {
-  return <Headerbox>나의 Todolist</Headerbox>;
-}
-
-export default Header;

@@ -5,28 +5,41 @@ import { createTodo } from "../redux/module/todos";
 
 const Input = () => {
   const dispatch = useDispatch();
+
+  // id 를 등록한 date 로 주어 고유 id
   const id = new Date();
 
+  // useState 를 사용하여 todo 생성
   const [todo, setTodo] = useState({
     id: 0,
     title: "",
     text: "",
     isDone: false,
   });
+
+  // 각 name 에 value 삽입하기 title - title , text-text
   const onChangeHandler = (event) => {
     const { name, value } = event.target;
     setTodo({ ...todo, [name]: value });
   };
 
+  // 버튼 클릭시 createTodo 를 통한 Todo 추가.
   const onClickCreateTodo = () => {
+    // 제목과 내용 입력이 안됬을시 alert 띄우고 return
+    // 내용없이 띄어쓰기만 해도 입력 안되기 처리함.
+    if (todo.title.replace(/ /g, "") === "") {
+      alert("제목을 입력해주세요!");
+      return;
+    } else if (todo.text.replace(/ /g, "") === "") {
+      alert("내용을 입력해주세요!");
+      return;
+    }
     dispatch(createTodo({ ...todo, id }));
 
-    // setTodo reset 해주기
+    // Todo title,text reset 해주기
     setTodo({
-      id: 0,
       title: "",
       text: "",
-      isDone: false,
     });
   };
 

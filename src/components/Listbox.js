@@ -1,15 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteTodo } from "../redux/module/todos";
-import { updateTodo } from "../redux/module/todos";
+import { deleteTodo, updateTodo, readTodo } from "../redux/module/todos";
 import { Link } from "react-router-dom";
-
-// import { useDispatch } from "react-redux";
 
 // useSelector 를 이용하여 state 에 todos 가져오기
 const Listbox = () => {
   const dispatch = useDispatch();
+
+  // state 에서 todos 가져오기
   const todos = useSelector((state) => state.todos.todos);
 
   // 삭제기능
@@ -23,57 +22,63 @@ const Listbox = () => {
     dispatch(updateTodo(id));
   };
 
-  console.log(todos);
+  // 선택된 Todo 뽑아오기
+  const onClickReadButton = (id) => {
+    dispatch(readTodo(id));
+  };
+
+  // console.log(todos);
+
+  // 각 todo 의 isDone true,false 에 따라 나눔.
+  // true,false 에 따라 다른 텍스트 버튼에 줌
+  // 버튼 호버시 다른 색 줘봄.
   return (
     <ListContainer>
-      <div className="working_box">
-        <p>Working</p>
-        {todos.map((todo) => {
-          if (!todo.isDone) {
-            return (
-              <TodoBox key={todo.id}>
-                <Link to="/sub">
-                  <div>상세보기</div>
-                </Link>
-                <TodoTitle>{todo.title}</TodoTitle>
-                <TodoText>{todo.text}</TodoText>
-                <Button delete onClick={() => onClickDeleteButton(todo.id)}>
-                  삭제하기
-                </Button>
-                <Button onClick={() => onClickUpdateButton(todo.id)}>
-                  {todo.isDone ? "취소하기" : "완료하기"}
-                </Button>
-              </TodoBox>
-            );
-          } else {
-            return null;
-          }
-        })}
-      </div>
-      <div className="done_box">
-        <p>Done</p>
-        {todos.map((todo) => {
-          if (todo.isDone) {
-            return (
-              <TodoBox key={todo.id}>
-                <Link to="/sub">
-                  <div>상세보기</div>
-                </Link>
-                <TodoTitle>{todo.title}</TodoTitle>
-                <TodoText>{todo.text}</TodoText>
-                <Button delete onClick={() => onClickDeleteButton(todo.id)}>
-                  삭제하기
-                </Button>
-                <Button onClick={() => onClickUpdateButton(todo.id)}>
-                  {todo.isDone ? "취소하기" : "완료하기"}
-                </Button>
-              </TodoBox>
-            );
-          } else {
-            return null;
-          }
-        })}
-      </div>
+      <P>Working</P>
+      {todos.map((todo) => {
+        if (!todo.isDone) {
+          return (
+            <TodoBox key={todo.id}>
+              <Link to="/sub" onClick={() => onClickReadButton(todo.id)}>
+                <Detail>상세보기</Detail>
+              </Link>
+              <TodoTitle>{todo.title}</TodoTitle>
+              <TodoText>{todo.text}</TodoText>
+              <Button delete onClick={() => onClickDeleteButton(todo.id)}>
+                삭제하기
+              </Button>
+              <Button onClick={() => onClickUpdateButton(todo.id)}>
+                {todo.isDone ? "취소하기" : "완료하기"}
+              </Button>
+            </TodoBox>
+          );
+        } else {
+          return null;
+        }
+      })}
+
+      <P>Done</P>
+      {todos.map((todo) => {
+        if (todo.isDone) {
+          return (
+            <TodoBox key={todo.id}>
+              <Link to="/sub" onClick={() => onClickReadButton(todo.id)}>
+                <Detail>상세보기</Detail>
+              </Link>
+              <TodoTitle>{todo.title}</TodoTitle>
+              <TodoText>{todo.text}</TodoText>
+              <Button delete onClick={() => onClickDeleteButton(todo.id)}>
+                삭제하기
+              </Button>
+              <Button onClick={() => onClickUpdateButton(todo.id)}>
+                {todo.isDone ? "취소하기" : "완료하기"}
+              </Button>
+            </TodoBox>
+          );
+        } else {
+          return null;
+        }
+      })}
     </ListContainer>
   );
 };
@@ -93,13 +98,24 @@ const ListContainer = styled.div`
   border: 1px solid gray;
   border-radius: 20px;
 `;
+const P = styled.p`
+  font-size: x-large;
+  font-weight: bold;
+`;
 const TodoBox = styled.div`
   display: inline-block;
   width: 253px;
   height: 120px;
   margin: 10px;
-  padding: 30px 30px 20px 30px;
+  padding: 25px 30px 40px 30px;
   background-color: #aaa;
+`;
+
+const Detail = styled.div`
+  position: relative;
+  width: 100px;
+  left: 200px;
+  color: black;
 `;
 
 const TodoTitle = styled.div`
@@ -113,6 +129,7 @@ const TodoText = styled.div`
   margin-bottom: 20px;
 `;
 
+// 버튼 children 의 텍스트 별로 다른 색 적용 그냥 연습해봄
 const Button = styled.button`
   margin-left: 10px;
   width: 113px;
@@ -121,7 +138,6 @@ const Button = styled.button`
   cursor: pointer;
   &:hover {
     scale: 1.03;
-    /* color: ${(props) => (props.delete ? "#b73e3e" : "yellow")}; */
     color: ${(props) =>
       props.children === "삭제하기"
         ? "#b73e3e"
