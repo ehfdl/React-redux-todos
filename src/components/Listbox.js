@@ -10,11 +10,14 @@ const Listbox = () => {
 
   // state 에서 todos 가져오기
   const todos = useSelector((state) => state.todos.todos);
+  const searchtodos = useSelector((state) => state.todos.searchtodos);
+  const pagenumber = useSelector((state) => state.todos.pagenumber);
+
+  console.log(pagenumber);
 
   // 삭제기능
   const onClickDeleteButton = (id) => {
     dispatch(deleteTodo(id));
-    console.log(id);
   };
 
   // working, done 업데이트 기능
@@ -94,7 +97,7 @@ const ListContainer = styled.div`
   padding: 20px;
   left: 50%;
   transform: translateX(-50%);
-  margin-top: 20px;
+  margin-top: 10px;
   border: 1px solid gray;
   border-radius: 20px;
 `;

@@ -3,6 +3,7 @@ const CREATE_TODO = "CREATE_TODO";
 const DELETE_TODO = "DELETE_TODO";
 const UPDATE_TODO = "UPDATE_TODO";
 const READ_TODO = "READ_TODO";
+const SEARCH_TODO = "SEARCH_TODO";
 
 // action creator 생성
 
@@ -34,6 +35,13 @@ export const readTodo = (payload) => {
   };
 };
 
+export const searchTodo = (payload) => {
+  return {
+    type: SEARCH_TODO,
+    payload,
+  };
+};
+
 // 초기 상태값
 const initialState = {
   todos: [
@@ -50,6 +58,8 @@ const initialState = {
       isDone: true,
     },
   ],
+
+  pagenumber: 0,
 };
 
 // 리듀서
@@ -96,6 +106,17 @@ const todos = (state = initialState, action) => {
       return {
         ...state,
         todo: [...state.todos].filter((todo) => todo.id === action.payload),
+      };
+    }
+
+    // title 검색 기능!  페이지 넘버 1로 변환 / 검색리스트 깔아보자
+    case SEARCH_TODO: {
+      return {
+        ...state,
+        searchtodos: [...state.todos].filter((todo) =>
+          todo.title.includes(action.payload)
+        ),
+        pagenumber: (state.pagenumber = 1),
       };
     }
 
