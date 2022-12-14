@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { searchTodo } from "../redux/module/todos";
+import { searchTodo, viewAll } from "../redux/module/todos";
 import { useDispatch } from "react-redux";
 
 const Search = () => {
   const dispatch = useDispatch();
 
   const [searchtext, setSearchText] = useState("");
+
+  const onClickViewAll = (event) => {
+    dispatch(viewAll(event));
+  };
 
   const onClickSearchBt = (event) => {
     event.preventDefault();
@@ -16,11 +20,12 @@ const Search = () => {
 
   return (
     <SearchBox>
-      <ViewAllTodoBt>전체보기</ViewAllTodoBt>
+      <ViewAllTodoBt onClick={onClickViewAll}>전체보기</ViewAllTodoBt>
       <SearchForm onSubmit={onClickSearchBt}>
         <SearchInput
           type="text"
           value={searchtext}
+          placeholder="제목을 검색하세요."
           onChange={(e) => setSearchText(e.target.value)}
         />
         <SearchBt>검색</SearchBt>
@@ -48,7 +53,8 @@ const ViewAllTodoBt = styled.button`
   height: 30px;
   left: 10%;
   margin-top: 30px;
-
+  cursor: pointer;
+  z-index: 99;
   position: relative;
 `;
 

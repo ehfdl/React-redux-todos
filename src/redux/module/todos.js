@@ -4,6 +4,7 @@ const DELETE_TODO = "DELETE_TODO";
 const UPDATE_TODO = "UPDATE_TODO";
 const READ_TODO = "READ_TODO";
 const SEARCH_TODO = "SEARCH_TODO";
+const VIEW_ALL = "VIEW_ALL";
 
 // action creator 생성
 
@@ -38,6 +39,13 @@ export const readTodo = (payload) => {
 export const searchTodo = (payload) => {
   return {
     type: SEARCH_TODO,
+    payload,
+  };
+};
+
+export const viewAll = (payload) => {
+  return {
+    type: VIEW_ALL,
     payload,
   };
 };
@@ -79,6 +87,9 @@ const todos = (state = initialState, action) => {
       return {
         ...state,
         todos: [...state.todos].filter((todo) => todo.id !== action.payload),
+        searchtodos: [...state.searchtodos].filter(
+          (todo) => todo.id !== action.payload
+        ),
       };
     }
 
@@ -87,6 +98,18 @@ const todos = (state = initialState, action) => {
       return {
         ...state,
         todos: [...state.todos].map((todo) => {
+          if (todo.id === action.payload) {
+            return {
+              ...todo,
+              isDone: !todo.isDone,
+            };
+          } else {
+            return {
+              ...todo,
+            };
+          }
+        }),
+        searchtodos: [...state.searchtodos].map((todo) => {
           if (todo.id === action.payload) {
             return {
               ...todo,
@@ -117,6 +140,13 @@ const todos = (state = initialState, action) => {
           todo.title.includes(action.payload)
         ),
         pagenumber: (state.pagenumber = 1),
+      };
+    }
+
+    case VIEW_ALL: {
+      return {
+        ...state,
+        pagenumber: (state.pagenumber = 0),
       };
     }
 
