@@ -1,3 +1,5 @@
+// id = new Date(),  input = div 사용.
+
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";

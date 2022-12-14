@@ -1,3 +1,5 @@
+// id = uuidv4(),  input = form, preventdefault 사용.
+
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
