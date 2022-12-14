@@ -1,15 +1,16 @@
-// id = new Date(),  input = div 사용.
+// id = uuidv4(),  input = form, preventdefault 사용.
 
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { createTodo } from "../redux/module/todos";
+import { v4 as uuidv4 } from "uuid";
 
-const Input = () => {
+const InputSec = () => {
   const dispatch = useDispatch();
 
   // id 를 등록한 date 로 주어 고유 id
-  const id = new Date();
+  const id = uuidv4();
 
   // useState 를 사용하여 todo 생성
   const [todo, setTodo] = useState({
@@ -26,7 +27,9 @@ const Input = () => {
   };
 
   // 버튼 클릭시 createTodo 를 통한 Todo 추가.
-  const onClickCreateTodo = () => {
+  const onClickCreateTodo = (event) => {
+    // prevent 새로고침 막기 form 사용시!
+    event.preventDefault();
     // 제목과 내용 입력이 안됬을시 alert 띄우고 return
     // 내용없이 띄어쓰기만 해도 입력 안되기 처리함.
     if (todo.title.replace(/ /g, "") === "") {
@@ -46,7 +49,7 @@ const Input = () => {
   };
 
   return (
-    <InputContainer>
+    <InputContainer onSubmit={onClickCreateTodo}>
       <InputBox
         type="text"
         name="title"
@@ -61,16 +64,16 @@ const Input = () => {
         onChange={onChangeHandler}
         value={todo.text}
       />
-      <Button onClick={onClickCreateTodo}>추가하기</Button>
+      <Button>추가하기</Button>
     </InputContainer>
   );
 };
 
-export default Input;
+export default InputSec;
 
 // styled-component
 
-const InputContainer = styled.div`
+const InputContainer = styled.form`
   position: relative;
   max-width: 750px;
   width: 100%;

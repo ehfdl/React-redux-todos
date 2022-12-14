@@ -39,9 +39,9 @@ const Listbox = () => {
         if (!todo.isDone) {
           return (
             <TodoBox key={todo.id}>
-              <Link to="/sub" onClick={() => onClickReadButton(todo.id)}>
+              <StyledLink to="/sub" onClick={() => onClickReadButton(todo.id)}>
                 <Detail>상세보기</Detail>
-              </Link>
+              </StyledLink>
               <TodoTitle>{todo.title}</TodoTitle>
               <TodoText>{todo.text}</TodoText>
               <Button delete onClick={() => onClickDeleteButton(todo.id)}>
@@ -62,9 +62,9 @@ const Listbox = () => {
         if (todo.isDone) {
           return (
             <TodoBox key={todo.id}>
-              <Link to="/sub" onClick={() => onClickReadButton(todo.id)}>
+              <StyledLink to="/sub" onClick={() => onClickReadButton(todo.id)}>
                 <Detail>상세보기</Detail>
-              </Link>
+              </StyledLink>
               <TodoTitle>{todo.title}</TodoTitle>
               <TodoText>{todo.text}</TodoText>
               <Button delete onClick={() => onClickDeleteButton(todo.id)}>
@@ -105,28 +105,35 @@ const P = styled.p`
 const TodoBox = styled.div`
   display: inline-block;
   width: 253px;
-  height: 120px;
+  min-height: 120px;
   margin: 10px;
-  padding: 25px 30px 40px 30px;
+  padding: 25px 30px 20px 30px;
   background-color: #aaa;
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
 `;
 
 const Detail = styled.div`
   position: relative;
   width: 100px;
   left: 200px;
-  color: black;
+  color: #eee;
 `;
 
 const TodoTitle = styled.div`
   position: relative;
   font-size: x-large;
   margin-bottom: 10px;
+  word-break: break-all;
 `;
 
 const TodoText = styled.div`
   margin-left: 5px;
+  margin-right: 5px;
   margin-bottom: 20px;
+  word-break: break-all;
 `;
 
 // 버튼 children 의 텍스트 별로 다른 색 적용 그냥 연습해봄
@@ -134,6 +141,7 @@ const Button = styled.button`
   margin-left: 10px;
   width: 113px;
   height: 40px;
+  /* background-color: #eee; */
 
   cursor: pointer;
   &:hover {
