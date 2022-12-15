@@ -10,11 +10,14 @@ const Listbox = () => {
 
   // state 에서 todos 가져오기
   const todos = useSelector((state) => state.todos.todos);
+  const searchtodos = useSelector((state) => state.todos.searchtodos);
+  const pagenumber = useSelector((state) => state.todos.pagenumber);
+
+  console.log(pagenumber);
 
   // 삭제기능
   const onClickDeleteButton = (id) => {
     dispatch(deleteTodo(id));
-    console.log(id);
   };
 
   // working, done 업데이트 기능
@@ -32,55 +35,119 @@ const Listbox = () => {
   // 각 todo 의 isDone true,false 에 따라 나눔.
   // true,false 에 따라 다른 텍스트 버튼에 줌
   // 버튼 호버시 다른 색 줘봄.
-  return (
-    <ListContainer>
-      <P>Working</P>
-      {todos.map((todo) => {
-        if (!todo.isDone) {
-          return (
-            <TodoBox key={todo.id}>
-              <StyledLink to="/sub" onClick={() => onClickReadButton(todo.id)}>
-                <Detail>상세보기</Detail>
-              </StyledLink>
-              <TodoTitle>{todo.title}</TodoTitle>
-              <TodoText>{todo.text}</TodoText>
-              <Button delete onClick={() => onClickDeleteButton(todo.id)}>
-                삭제하기
-              </Button>
-              <Button onClick={() => onClickUpdateButton(todo.id)}>
-                {todo.isDone ? "취소하기" : "완료하기"}
-              </Button>
-            </TodoBox>
-          );
-        } else {
-          return null;
-        }
-      })}
+  if (pagenumber === 0) {
+    return (
+      <ListContainer>
+        <P>Working</P>
+        {todos.map((todo) => {
+          if (!todo.isDone) {
+            return (
+              <TodoBox key={todo.id}>
+                <StyledLink
+                  to="/sub"
+                  onClick={() => onClickReadButton(todo.id)}
+                >
+                  <Detail>상세보기</Detail>
+                </StyledLink>
+                <TodoTitle>{todo.title}</TodoTitle>
+                <TodoText>{todo.text}</TodoText>
+                <Button delete onClick={() => onClickDeleteButton(todo.id)}>
+                  삭제하기
+                </Button>
+                <Button onClick={() => onClickUpdateButton(todo.id)}>
+                  {todo.isDone ? "취소하기" : "완료하기"}
+                </Button>
+              </TodoBox>
+            );
+          } else {
+            return null;
+          }
+        })}
 
-      <P>Done</P>
-      {todos.map((todo) => {
-        if (todo.isDone) {
-          return (
-            <TodoBox key={todo.id}>
-              <StyledLink to="/sub" onClick={() => onClickReadButton(todo.id)}>
-                <Detail>상세보기</Detail>
-              </StyledLink>
-              <TodoTitle>{todo.title}</TodoTitle>
-              <TodoText>{todo.text}</TodoText>
-              <Button delete onClick={() => onClickDeleteButton(todo.id)}>
-                삭제하기
-              </Button>
-              <Button onClick={() => onClickUpdateButton(todo.id)}>
-                {todo.isDone ? "취소하기" : "완료하기"}
-              </Button>
-            </TodoBox>
-          );
-        } else {
-          return null;
-        }
-      })}
-    </ListContainer>
-  );
+        <P>Done</P>
+        {todos.map((todo) => {
+          if (todo.isDone) {
+            return (
+              <TodoBox key={todo.id}>
+                <StyledLink
+                  to="/sub"
+                  onClick={() => onClickReadButton(todo.id)}
+                >
+                  <Detail>상세보기</Detail>
+                </StyledLink>
+                <TodoTitle>{todo.title}</TodoTitle>
+                <TodoText>{todo.text}</TodoText>
+                <Button delete onClick={() => onClickDeleteButton(todo.id)}>
+                  삭제하기
+                </Button>
+                <Button onClick={() => onClickUpdateButton(todo.id)}>
+                  {todo.isDone ? "취소하기" : "완료하기"}
+                </Button>
+              </TodoBox>
+            );
+          } else {
+            return null;
+          }
+        })}
+      </ListContainer>
+    );
+  } else if (pagenumber === 1) {
+    return (
+      <ListContainer>
+        <P>Working</P>
+        {searchtodos.map((todo) => {
+          if (!todo.isDone) {
+            return (
+              <TodoBox key={todo.id}>
+                <StyledLink
+                  to="/sub"
+                  onClick={() => onClickReadButton(todo.id)}
+                >
+                  <Detail>상세보기</Detail>
+                </StyledLink>
+                <TodoTitle>{todo.title}</TodoTitle>
+                <TodoText>{todo.text}</TodoText>
+                <Button delete onClick={() => onClickDeleteButton(todo.id)}>
+                  삭제하기
+                </Button>
+                <Button onClick={() => onClickUpdateButton(todo.id)}>
+                  {todo.isDone ? "취소하기" : "완료하기"}
+                </Button>
+              </TodoBox>
+            );
+          } else {
+            return null;
+          }
+        })}
+
+        <P>Done</P>
+        {searchtodos.map((todo) => {
+          if (todo.isDone) {
+            return (
+              <TodoBox key={todo.id}>
+                <StyledLink
+                  to="/sub"
+                  onClick={() => onClickReadButton(todo.id)}
+                >
+                  <Detail>상세보기</Detail>
+                </StyledLink>
+                <TodoTitle>{todo.title}</TodoTitle>
+                <TodoText>{todo.text}</TodoText>
+                <Button delete onClick={() => onClickDeleteButton(todo.id)}>
+                  삭제하기
+                </Button>
+                <Button onClick={() => onClickUpdateButton(todo.id)}>
+                  {todo.isDone ? "취소하기" : "완료하기"}
+                </Button>
+              </TodoBox>
+            );
+          } else {
+            return null;
+          }
+        })}
+      </ListContainer>
+    );
+  }
 };
 
 export default Listbox;
@@ -94,7 +161,7 @@ const ListContainer = styled.div`
   padding: 20px;
   left: 50%;
   transform: translateX(-50%);
-  margin-top: 20px;
+  margin-top: 10px;
   border: 1px solid gray;
   border-radius: 20px;
 `;
