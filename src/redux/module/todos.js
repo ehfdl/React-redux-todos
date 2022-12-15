@@ -5,6 +5,7 @@ const UPDATE_TODO = "UPDATE_TODO";
 const READ_TODO = "READ_TODO";
 const SEARCH_TODO = "SEARCH_TODO";
 const VIEW_ALL = "VIEW_ALL";
+// const EDIT_TODO = "EDIT_TODO";
 
 // action creator 생성
 
@@ -50,6 +51,13 @@ export const viewAll = (payload) => {
   };
 };
 
+// export const editTodo = (payload) => {
+//   return {
+//     type: EDIT_TODO,
+//     payload,
+//   };
+// };
+
 // 초기 상태값
 const initialState = {
   todos: [
@@ -66,6 +74,7 @@ const initialState = {
       isDone: true,
     },
   ],
+  // todo: "",
   searchtodos: "",
   savesearch: "",
   // 페이지 넘버=0 전체리스트 / 페이지 넘버 = 1 검색한 리스트 렌더링
@@ -170,6 +179,16 @@ const todos = (state = initialState, action) => {
         pagenumber: (state.pagenumber = 0),
       };
     }
+
+    // case EDIT_TODO: {
+    //   return {
+    //     ...state,
+    //     todos: [...state.todos].filter((todo) => todo.id !== action.payload),
+    //     todos: [...state.todos, action.payload],
+
+
+    //   };
+    // }
 
     default:
       return state;

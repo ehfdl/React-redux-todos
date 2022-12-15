@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import Header from '../components/Header';
+// import EditInput from "../components/EditInput";
 
 const Sub = () => {
   // 선택된 todo  useSelector 로 저장
@@ -17,6 +19,9 @@ const Sub = () => {
 
   return (
     <Subbase>
+      <Header/>
+      {/* <EditInput /> */}
+
       <SubBox>
         <TodoId>ID: {todoid}</TodoId>
         <TodoTitle>{todotitle}</TodoTitle>

@@ -71,8 +71,8 @@ const Listbox = () => {
                 >
                   <Detail>상세보기</Detail>
                 </StyledLink>
-                <TodoTitle>{todo.title}</TodoTitle>
-                <TodoText>{todo.text}</TodoText>
+                <DoneTodoTitle>{todo.title}</DoneTodoTitle>
+                <DoneTodoText>{todo.text}</DoneTodoText>
                 <Button delete onClick={() => onClickDeleteButton(todo.id)}>
                   삭제하기
                 </Button>
@@ -127,8 +127,8 @@ const Listbox = () => {
                 >
                   <Detail>상세보기</Detail>
                 </StyledLink>
-                <TodoTitle>{todo.title}</TodoTitle>
-                <TodoText>{todo.text}</TodoText>
+                <DoneTodoTitle>{todo.title}</DoneTodoTitle>
+                <DoneTodoText>{todo.text}</DoneTodoText>
                 <Button delete onClick={() => onClickDeleteButton(todo.id)}>
                   삭제하기
                 </Button>
@@ -197,6 +197,24 @@ const TodoText = styled.div`
   margin-right: 5px;
   margin-bottom: 20px;
   word-break: break-all;
+ 
+  
+`;
+const DoneTodoTitle = styled.div`
+  position: relative;
+  font-size: x-large;
+  margin-bottom: 10px;
+  word-break: break-all;
+  text-decoration: line-through;
+`;
+
+const DoneTodoText = styled.div`
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 20px;
+  word-break: break-all;
+  text-decoration: line-through;
+  
 `;
 
 // 버튼 children 의 텍스트 별로 다른 색 적용 그냥 연습해봄
