@@ -13,8 +13,6 @@ const Listbox = () => {
   const searchtodos = useSelector((state) => state.todos.searchtodos);
   const pagenumber = useSelector((state) => state.todos.pagenumber);
 
-  console.log(pagenumber);
-
   // 삭제기능
   const onClickDeleteButton = (id) => {
     dispatch(deleteTodo(id));
@@ -29,8 +27,6 @@ const Listbox = () => {
   const onClickReadButton = (id) => {
     dispatch(readTodo(id));
   };
-
-  // console.log(todos);
 
   // 각 todo 의 isDone true,false 에 따라 나눔.
   // true,false 에 따라 다른 텍스트 버튼에 줌
