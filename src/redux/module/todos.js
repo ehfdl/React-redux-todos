@@ -66,6 +66,8 @@ const initialState = {
       isDone: true,
     },
   ],
+  searchtodos: "",
+  savesearch: "",
   // 페이지 넘버=0 전체리스트 / 페이지 넘버 = 1 검색한 리스트 렌더링
   pagenumber: 0,
 };
@@ -75,12 +77,17 @@ const initialState = {
 const todos = (state = initialState, action) => {
   switch (action.type) {
     // 추가기능 - state를 전개하고 todos 에 새로운 todo 를 추가
-    // 추가시 전체 todolist 렌더링
+    // 검색기능시 추가했을때 포함된말이 있으면 바로 추가
     case CREATE_TODO: {
       return {
         ...state,
         todos: [...state.todos, action.payload],
-        pagenumber: (state.pagenumber = 0),
+
+        // Todos 를 받아오니 동시진행으로 데이터를 못읽음..
+        // searchtodos 에 추가 해버리고 저장해두엇던 검색어로 다시 filter 진행!
+        searchtodos: [...state.todos, action.payload].filter((todo) =>
+          todo.title.includes(state.savesearch)
+        ),
       };
     }
 
@@ -89,7 +96,11 @@ const todos = (state = initialState, action) => {
     case DELETE_TODO: {
       return {
         ...state,
+
+        // todos 삭제기능
         todos: [...state.todos].filter((todo) => todo.id !== action.payload),
+
+        // 검색todos 업데이트
         searchtodos: [...state.searchtodos].filter(
           (todo) => todo.id !== action.payload
         ),
@@ -101,6 +112,8 @@ const todos = (state = initialState, action) => {
     case UPDATE_TODO: {
       return {
         ...state,
+
+        // todos 완료/취소기능
         todos: [...state.todos].map((todo) => {
           if (todo.id === action.payload) {
             return {
@@ -113,6 +126,8 @@ const todos = (state = initialState, action) => {
             };
           }
         }),
+
+        // 검색todos 업데이트
         searchtodos: [...state.searchtodos].map((todo) => {
           if (todo.id === action.payload) {
             return {
@@ -143,11 +158,12 @@ const todos = (state = initialState, action) => {
         searchtodos: [...state.todos].filter((todo) =>
           todo.title.includes(action.payload)
         ),
-        searchitem: action.payload,
         pagenumber: (state.pagenumber = 1),
+        savesearch: (state.savesearch = action.payload),
       };
     }
 
+    // 전체리스트 보기
     case VIEW_ALL: {
       return {
         ...state,
